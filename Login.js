@@ -1,5 +1,6 @@
 import {useState} from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { black } from "react-native-paper/lib/typescript/styles/colors";
 
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -11,13 +12,15 @@ const Login = () => {
         style={styles.input}
         onChangeText={setPhoneNumber}
         value={phoneNumber}
-        placeholder = "123-456-7890"
+        placeholder = "###-###-####"
+        keyboardType="default"
+
       />
       <TextInput
         style={styles.input}
         onChangeText={setOneTimePassword}
         value={oneTimePassword}
-        placeholder="1234"
+        placeholder="####"
         keyboardType="numeric"
         secureTextEntry={true}
       />
@@ -34,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UselessTextInput;
+export default Login;
