@@ -6,20 +6,36 @@ import { Text, TouchableOpacity, View } from "react-native";
 const sendText = async (phoneNumber) => {
   
   // using fetch do a POST to https://dev.stedi.me/twofactorlogin/8056688113
-  await fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber),{
+  const loginResponse = await fetch('https://dev.stedi.me/twofactorlogin/'+phoneNumber,{
     method: 'POST',
     headers: {
       'Content-Type': 'application/text'
     }
-  }
+  });
+  const loginResponseText = await loginResponse.text();
+  console.log('Login Response',loginResponseText);
   console.log("Phone Number:", phoneNumber);
+}
+
+const getToken = async(phoneNumber,otp) =>{
+  const loginResponse = await fetch('https://dev.stedi.me/twofactorlogin',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/text'
+    },
+    body:{
+      phoneNumber,
+      oneTimePassword
+    }
+  });
+
+  const token = await loginResponse.text();
+  console.log(token)
 }
 
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [oneTimePassword, setOneTimePassword] = useState(null);
-  const [count, setCount] = useState(0);
-  const onPress = () => setCount(prevCount => prevCount + 1);
 
   return (
     <SafeAreaView>
@@ -47,7 +63,7 @@ const Login = () => {
       <View>
         <TouchableOpacity
           style={styles.button}
-          onPress={()=>{sendText(phoneNumber)}}>
+          onPress={()=>sendText(phoneNumber)}>
               
           <Text style = {styles.text}>Send Text</Text>
         </TouchableOpacity>
@@ -101,26 +117,6 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
-
-// No idea what this is but im going to leave it here
-// const App = () => {
-//   const [count, setCount] = useState(0);
-//   const onPress = () => setCount(prevCount => prevCount + 1);
-
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.countContainer}>
-//         <Text>Count: {count}</Text>
-//       </View>
-//       <TouchableOpacity
-//         style={styles.button}
-//         onPress={onPress}
-//       >
-//         <Text>Press Here</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// };
 
 
 export default Login;
