@@ -8,7 +8,8 @@ function Bar(props) {
     return(
         <View style={styles.bar}>
             <AppName />
-            <Setting />  
+            <Setting />
+            <Text>User: {props.loggedInUser}</Text>  
         </View>
     )
   }
